@@ -1,32 +1,27 @@
+<?php
+// Incluir el archivo de contraseñas
+require 'contra.php';
 
-	<?php
-			require "todo.php";
-		
-		
-			function return_response($status, $statusMessage, $data) {
-				header("HTTP/1.1 $status $statusMessage");
-				header("Content-Type: application/json; charset=UTF-8");
-				echo json_encode($data);
-			}
-			 
-			$bodyRequest = file_get_contents("php://input");
-			
-			switch ($_SERVER['REQUEST_METHOD']) {
-				case 'POST':
-					$db = new DB();
-					$new_todo = new Todo;
-					$new_todo->jsonConstruct($bodyRequest);
-					$new_todo->insert($db->connection); //A falta de programar el insert
-					$todo_list = Todo::DB_selectAll($db->connection);
-					// $todo_list -> Convertir a json y pasarlo en return_response
-					// return_response(200, "OK", $json_del_array_de_todo);
-					break;
-				default:
-					return_response(405, "Method Not Allowed", null);
-					break;
-			}
-	
-		
-		
-	?>
+// Nombre de la tabla
+$table = "todo_list";
 
+try {
+    // Conexión a la base de datos usando PDO con las variables importadas
+    $db = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $user, $password);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Insertar un nuevo elemento si se ha enviado el formulario
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['content'])) {
+        $content = $_POST['content'];
+        $stmt = $db->prepare("INSERT INTO $table (content) VALUES (:content)");
+        $stmt->bindParam(':content', $content);
+        $stmt->execute();
+        echo "<p>Elemento añadido con éxito.</p>";
+    }
+
+} catch (PDOException $e) {
+    // En caso de error, mostrar mensaje
+    echo "Error: " . $e->getMessage() . "<br/>";
+    die();
+}
+?>
