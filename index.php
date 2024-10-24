@@ -1,71 +1,34 @@
+<?php
+// Incluir el archivo de controllador
+require 'Controller.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List actualizble mediante botón</title>
+    <title>TODO List</title>
 </head>
 <body>
-    <label for="content">Nueva tarea</label>
-    <input type="text" id="content" placeholder="Ingresa una tarea"><br>
-    <button id="guardar">Guardar</button>
+
+    <h3>Añadir nuevo elemento a la lista</h3>
+    <form method="POST" action="">
+        <label for="content">Elemento:</label>
+        <input type="text" id="content" name="content" required>
+        <input type="submit" value="Añadir">
+    </form>
+
     <?php
-        require "DB.php";
-        require "todo.php";
-        try {
-                $db = new DB;
-                echo "<h2 id=\"lista\">TODO</h2>";
-                echo "<ul>";
-                $todo_list = Todo::DB_selectAll($db->connection);
-                foreach ($todo_list as $row) {
-                    echo "<li>". $row->getItem_id() .". ". $row->getContent() . "</li>";
-                }
-                echo "</ul>";
-            } 
-        catch (PDOException $e) {
-                print "Error!: " . $e->getMessage() . "<br/>";
-                die();
-            }
+    // Mostrar la lista de elementos después del formulario
+    echo "<h2>TODO List</h2><ul>";
+    foreach($db->query("SELECT * FROM $table") as $row) {
+        echo "<li>" . $row['item_id'] . ". " . htmlspecialchars($row['content']) . "</li>";
+    }
+    echo "</ul>";
     ?>
-    <script>
-        document.getElementById('guardar').addEventListener('click', function () {
-            const content = document.getElementById('content').value;
-
-            if (!content) {
-                alert('Por favor, introduce un valor.');
-                return;
-            }
-
-            const url = 'http://todo.cierva/controller.php';  
-            
-            const postData = {
-                content: content
-            };
-
-            // Llamada POST
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(postData)
-            })
-            .then(response => response.json())  // Convertir la respuesta a JSON
-            .then(data => {
-                // Limpiar la tabla antes de agregar los nuevos datos
-                const lista = document.getElementById('lista');
-                lista.innerHTML = ''; // Eliminar el contenido previo de la tabla
-
-                // La respuesta es un array de objetos JSON
-                data.forEach(item => {
-                    var li = document.createElement("li");
-                    li.appendChild(document.createTextNode(item.item_id+". "+item.content));
-                    ul.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Error en la solicitud POST:', error));
-        });
-    </script>
 
 </body>
 </html>
