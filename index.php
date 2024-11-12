@@ -2,17 +2,15 @@
 // Incluir el archivo del controlador
 require 'controller.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TODO List - Actualizable sin recargar</title>
+    <title>TODO List - Editable</title>
 </head>
 <body>
-
     <h3>Añadir nuevo elemento a la lista</h3>
     <label for="content">Elemento:</label>
     <input type="text" id="content" placeholder="Ingresa una tarea">
@@ -29,7 +27,6 @@ require 'controller.php';
             </li>
         <?php endforeach; ?>
     </ul>
-
     <script>
         function llamada_a_controller(metodo, postData) {
             const url = 'controller.php'; 
@@ -99,6 +96,5 @@ require 'controller.php';
             llamada_a_controller("POST", postData);
         });
     </script>
-
 </body>
 </html>
