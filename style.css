@@ -1,77 +1,148 @@
+/* Estilo general del cuerpo */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #f7f9fc;  /* Color de fondo suave */
+    color: #333;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     min-height: 100vh;
 }
 
-h2 {
-    color: #333;
+/* Estilo del contenedor principal */
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin-top: 40px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
 }
 
+/* Encabezados */
+h2, h3 {
+    color: #4a90e2;
+    text-align: center;
+}
+
+/* Estilo del input y botón de añadir */
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #4a90e2;
+}
+
+button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #357ab8;
+}
+
+/* Lista de TODOs */
 .todo-list {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
-    width: 300px;
     margin: 20px 0;
 }
 
 .todo-list li {
-    background-color: #ffffff;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
+    align-items: center;
     justify-content: space-between;
-}
-
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 300px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-form input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background: #fff;
+    padding: 10px 15px;
     margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-form input[type="submit"] {
-    background-color: #5cb85c;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    border-radius: 4px;
-    cursor: pointer;
+.todo-list li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-form input[type="submit"]:hover {
-    background-color: #4cae4c;
+/* Botón de eliminación en cada elemento */
+button.delete-button {
+    background-color: #e74c3c;
+    margin-left: 10px;
 }
 
-.success {
-    color: #28a745;
-    margin-bottom: 20px;
+button.delete-button:hover {
+    background-color: #c0392b;
 }
 
-.error {
-    color: #dc3545;
+/* Campo de edición */
+input[type="text"].edit-input {
+    width: 50%;
+    padding: 5px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    margin-right: 10px;
+}
+
+/* Botón de modificación */
+button.edit-button {
+    background-color: #f39c12;
+    margin-left: 5px;
+}
+
+button.edit-button:hover {
+    background-color: #e67e22;
+}
+
+/* Mensaje de error o advertencia */
+.alert {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    input[type="text"] {
+        width: calc(100% - 30px);
+    }
+
+    .todo-list li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    input[type="text"].edit-input {
+        width: calc(100% - 30px);
+        margin-bottom: 10px;
+    }
 }
